@@ -2,11 +2,13 @@
 export interface VPSPlan {
   id: string;
   name: string;
-  requirement: string;
+  requirement?: string;
+  priceINR?: string;
+  priceUSD?: string;
   ram: string;
   cpu: string;
   storage: string;
-  ipv4: boolean;
+  ipv4: string; // Changed to string to support "Optional", "Included", etc.
   bandwidth?: string;
   virtualization?: string;
   uptime?: string;
@@ -16,5 +18,7 @@ export interface VPSPlan {
 
 export enum PlanType {
   BOOSTER = 'BOOSTER',
-  INVITE = 'INVITE'
+  INVITE = 'INVITE',
+  BUDGET = 'BUDGET',
+  PREMIUM = 'PREMIUM'
 }
