@@ -8,23 +8,37 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
               brand: {
-                orange: '#FF5500', // True vibrant orange
-                accent: '#E64A00',
-                dark: '#000000',
-                gray: '#0A0A0A',
+                orange: '#FF5500', 
+                accent: '#FF7733',
+                blue: {
+                  darkest: '#050810', // Even deeper navy
+                  dark: '#0B1121',
+                  medium: '#111827',
+                  light: '#1F2937'
+                },
                 white: '#FFFFFF',
               }
             },
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              display: ['Orbitron', 'sans-serif'],
+              sans: ['Poppins', 'sans-serif'],
+              display: ['Poppins', 'sans-serif'],
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
             }
           }
         }
@@ -32,44 +46,59 @@
     </script>
     <style>
       body {
-        background-color: #000000;
+        background-color: #050810;
         color: #FFFFFF;
         overflow-x: hidden;
+        font-family: 'Poppins', sans-serif;
       }
       .orange-gradient-text {
-        background: linear-gradient(to right, #FF5500, #FF8800, #E64A00);
+        background: linear-gradient(135deg, #FF5500 0%, #FF9966 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
       .glass-card {
-        background: rgba(10, 10, 10, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 85, 0, 0.1);
+        background: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       }
-      .glass-card:hover {
-        border-color: rgba(255, 85, 0, 0.3);
-        box-shadow: 0 0 20px rgba(255, 85, 0, 0.05);
+      .glossy-border {
+        position: relative;
+        background: linear-gradient(135deg, rgba(255,85,0,0.3) 0%, rgba(255,85,0,0.05) 50%, rgba(255,85,0,0) 100%);
+        padding: 1px;
+        border-radius: inherit;
+      }
+      .glow-orange {
+        box-shadow: 0 0 40px -10px rgba(255, 85, 0, 0.3);
       }
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #000000;
+        background: #050810;
       }
       ::-webkit-scrollbar-thumb {
-        background: #1A1A1A;
-        border-radius: 4px;
+        background: #1e293b;
+        border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #FF5500;
+      }
+      /* Custom selection color */
+      ::selection {
+        background: rgba(255, 85, 0, 0.3);
+        color: white;
       }
     </style>
   <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.11?external=react,react-dom",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>

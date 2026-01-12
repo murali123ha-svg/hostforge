@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PlanCard } from './components/PlanCard';
 import {
   BOOSTER_PLANS,
@@ -50,115 +51,147 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen font-sans selection:bg-brand-orange/30 bg-brand-dark">
+    <div className="min-h-screen font-sans bg-brand-blue-darkest">
       {/* ================= NAVBAR ================= */}
-      <nav className="fixed top-0 w-full z-50 bg-brand-dark/80 backdrop-blur-lg border-b border-white/5">
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+        className="fixed top-0 w-full z-50 bg-brand-blue-darkest/40 backdrop-blur-2xl border-b border-white/[0.03]"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[80px] flex items-center justify-between">
           
-          {/* NAV BRANDING - LOGO ON LEFT SIDE TOP CORNER */}
-          <div className="flex items-center gap-3">
-            <img 
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <motion.img 
+              whileHover={{ rotate: 180 }}
+              transition={{ duration: 0.6 }}
               src={LOGO_ORANGE_URL} 
               alt="HF Logo" 
-              className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(255,85,0,0.5)]"
+              className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(255,85,0,0.5)]"
               loading="eager"
             />
-            <span className="font-display font-bold text-xl tracking-tight uppercase text-white">
+            <span className="font-black text-2xl tracking-tighter uppercase text-white">
               HOST<span className="text-brand-orange">FORGE</span>
             </span>
           </div>
 
-          {/* NAV LINKS */}
-          <div className="flex items-center gap-6">
-            <a
-              href="#plans"
-              onClick={(e) => scrollToSection(e, 'plans')}
-              className="text-sm font-semibold text-neutral-400 hover:text-brand-orange transition-colors"
-            >
-              Plans
-            </a>
-            <a
-              href="#terms"
-              onClick={(e) => scrollToSection(e, 'terms')}
-              className="text-sm font-semibold text-neutral-400 hover:text-brand-orange transition-colors"
-            >
-              Terms
-            </a>
-            <a
+          <div className="hidden md:flex items-center gap-10">
+            {['plans', 'terms'].map((item) => (
+              <a
+                key={item}
+                href={`#${item}`}
+                onClick={(e) => scrollToSection(e, item)}
+                className="text-xs font-black text-slate-400 hover:text-brand-orange transition-all uppercase tracking-[0.2em]"
+              >
+                {item}
+              </a>
+            ))}
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href={DISCORD_INVITE_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-brand-orange text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 hover:bg-white hover:text-brand-dark hover:scale-105 shadow-[0_0_20px_rgba(255,85,0,0.4)]"
+              className="bg-brand-orange text-white px-8 py-3.5 rounded-full text-xs font-black transition-all uppercase tracking-widest shadow-[0_0_20px_rgba(255,85,0,0.25)] hover:shadow-brand-orange/40"
             >
               Join Discord
-            </a>
+            </motion.a>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* ================= HERO ================= */}
-      <section className="relative pt-48 pb-24 overflow-hidden text-center">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-brand-orange/10 rounded-full blur-[120px] -z-10" />
+      <section className="relative pt-52 pb-40 overflow-hidden text-center">
+        {/* Animated Background Elements */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-brand-orange/[0.02] rounded-full blur-[160px] -z-10 animate-pulse-slow" />
+        <motion.div 
+          animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-20 -left-20 w-[400px] h-[400px] bg-brand-orange/[0.05] rounded-full blur-[120px] -z-10" 
+        />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-bold mb-8 animate-pulse uppercase tracking-widest">
-            <span className="w-2 h-2 rounded-full bg-brand-orange"></span>
-            ENTERPRISE PROXMOX INFRASTRUCTURE
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-brand-orange text-[10px] font-black mb-12 tracking-[0.3em] uppercase backdrop-blur-md"
+          >
+            <span className="w-2 h-2 rounded-full bg-brand-orange shadow-[0_0_10px_#FF5500]"></span>
+            PREMIUM PROXMOX NODES
+          </motion.div>
 
-          <h1 className="text-5xl md:text-8xl font-display font-bold mb-6 tracking-tighter leading-tight text-white uppercase">
+          <motion.h1 
+            initial={{ opacity: 0, filter: 'blur(10px)', y: 30 }}
+            animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-6xl md:text-9xl font-black mb-10 tracking-tighter leading-none text-white uppercase"
+          >
             FORGE YOUR <br />
-            <span className="orange-gradient-text uppercase">DIGITAL EMPIRE</span>
-          </h1>
+            <span className="orange-gradient-text italic">LEGACY</span>
+          </motion.h1>
 
-          <p className="max-w-2xl mx-auto text-lg text-neutral-400 mb-12 font-medium">
-            Experience elite VPS performance starting at just ₹49/mo. 
-            Stable, Affordable, and Built for Scale.
-            <span className="block mt-4 font-bold text-white tracking-wide uppercase text-sm">
-              99.9% Uptime • DDR4 RAM • NVMe Storage
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="max-w-3xl mx-auto text-lg md:text-2xl text-slate-400 mb-16 font-medium leading-relaxed"
+          >
+            The pinnacle of VPS hosting. High speed, low latency, and 
+            unrivaled hardware stability for your projects.
+            <span className="block mt-6 text-brand-orange font-black text-sm tracking-[0.4em] uppercase opacity-80">
+              NVMe Gen4 • DDR5 ECC • 10Gbps Network
             </span>
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
             <a
               href="#plans"
               onClick={(e) => scrollToSection(e, 'plans')}
-              className="px-14 py-5 bg-brand-orange text-white font-black rounded-full text-lg shadow-2xl hover:bg-white hover:text-brand-dark transition-all transform hover:scale-105"
+              className="w-full sm:w-auto px-16 py-6 bg-brand-orange text-white font-black rounded-2xl text-lg shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:shadow-brand-orange/50 hover:scale-105 transition-all duration-500 uppercase tracking-widest"
             >
-              EXPLORE PLANS
+              Explore Tiers
             </a>
             <a
               href={DISCORD_INVITE_LINK}
               target="_blank"
-              className="px-14 py-5 bg-white/5 border border-white/10 text-white font-bold rounded-full text-lg hover:bg-white/10 backdrop-blur-md transition-all"
+              className="w-full sm:w-auto px-16 py-6 bg-white/5 border border-white/10 text-white font-black rounded-2xl text-lg hover:bg-white/10 backdrop-blur-xl transition-all duration-500 uppercase tracking-widest"
             >
-              ORDER NOW
+              Discord Order
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ================= PLANS ================= */}
-      <section id="plans" className="py-24 scroll-mt-20">
+      <section id="plans" className="py-32 scroll-mt-24 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-display font-bold mb-12 uppercase text-white tracking-tight">
-            Choose Your <span className="text-brand-orange">Power Level</span>
-          </h2>
+          <motion.h2 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-5xl md:text-8xl font-black mb-20 uppercase text-white tracking-tighter italic"
+          >
+            THE <span className="text-brand-orange not-italic">ARSENAL</span>
+          </motion.h2>
 
-          <div className="flex flex-wrap justify-center gap-3 mb-16 bg-neutral-900/50 p-2 rounded-[2.5rem] border border-white/5 inline-flex shadow-inner">
+          <div className="flex flex-wrap justify-center gap-3 mb-24 bg-brand-blue-darkest/60 p-2 rounded-[2.5rem] border border-white/5 inline-flex backdrop-blur-3xl shadow-2xl">
             {[
-              { type: PlanType.BUDGET, label: '💵 Budget (Paid)' },
-              { type: PlanType.PREMIUM, label: '👑 Premium (Paid)' },
-              { type: PlanType.BOOSTER, label: '💎 Boosters' },
-              { type: PlanType.INVITE, label: '🤝 Invites' }
+              { type: PlanType.BUDGET, label: 'Standard' },
+              { type: PlanType.PREMIUM, label: 'Premium' },
+              { type: PlanType.BOOSTER, label: 'Boosters' },
+              { type: PlanType.INVITE, label: 'Invites' }
             ].map((tab) => (
               <button
                 key={tab.type}
                 onClick={() => setActiveTab(tab.type)}
-                className={`px-8 py-4 rounded-3xl font-bold transition-all duration-300 whitespace-nowrap ${
+                className={`px-10 py-5 rounded-3xl font-black transition-all duration-500 uppercase tracking-[0.2em] text-[10px] ${
                   activeTab === tab.type
-                    ? 'bg-brand-orange text-white shadow-xl scale-105'
-                    : 'text-neutral-500 hover:text-white hover:bg-white/5'
+                    ? 'bg-brand-orange text-white shadow-xl scale-110'
+                    : 'text-slate-500 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {tab.label}
@@ -166,80 +199,106 @@ const App: React.FC = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {getActivePlans().map((plan) => (
-              <PlanCard key={plan.id} plan={plan} />
+          <motion.div 
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"
+          >
+            <AnimatePresence mode="popLayout">
+              {getActivePlans().map((plan, index) => (
+                <motion.div
+                  key={plan.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: index * 0.05, duration: 0.4 }}
+                >
+                  <PlanCard plan={plan} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= TERMS ================= */}
+      <section id="terms" className="py-40 scroll-mt-24 relative bg-brand-blue-darkest/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-32">
+            <h2 className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter italic">
+              LEGAL <span className="text-brand-orange not-italic">FORGE</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              { 
+                title: 'Usage Policy', 
+                icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>,
+                rules: ['01. No crypto mining or stress testing.', '02. No abusive network activity allowed.']
+              },
+              { 
+                title: 'Payments', 
+                icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>,
+                rules: ['03. IPv4 is an add-on for basic plans.', '04. Strict no-refund policy post-setup.']
+              },
+              { 
+                title: 'Assistance', 
+                icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>,
+                rules: ['05. 99.9% Uptime SLA Guarantee.', '06. Ticket-based Discord support 24/7.']
+              }
+            ].map((section, i) => (
+              <motion.div 
+                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                viewport={{ once: true }}
+                key={i} 
+                className="glass-card p-12 rounded-[3rem] group hover:border-brand-orange/30 transition-all duration-500"
+              >
+                <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center mb-10 group-hover:scale-110 group-hover:bg-brand-orange/10 transition-all duration-500">
+                  <span className="text-brand-orange">{section.icon}</span>
+                </div>
+                <h3 className="text-2xl font-black text-white mb-8 uppercase tracking-widest">{section.title}</h3>
+                <ul className="space-y-6 text-slate-400 font-bold text-sm">
+                  {section.rules.map((rule, idx) => (
+                    <li key={idx} className="flex gap-4">
+                      <span className="text-brand-orange/40">●</span>
+                      <span>{rule}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ================= TERMS ================= */}
-      <section id="terms" className="py-32 scroll-mt-20 relative">
-         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-[140px] -z-10" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-display font-bold uppercase text-white tracking-tighter italic">TERMS OF <span className="text-brand-orange">SERVICE</span></h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="glass-card p-12 rounded-[3rem] border-brand-orange/5">
-              <h3 className="text-xl font-display font-bold text-brand-orange mb-8 uppercase tracking-widest">Usage Policy</h3>
-              <ul className="space-y-6 text-neutral-400 font-medium">
-                <li className="flex gap-4">
-                  <span className="text-brand-orange">»</span>
-                  <span>No crypto mining, stress testing, or abusive network usage allowed.</span>
-                </li>
-                <li className="flex gap-4">
-                  <span className="text-brand-orange">»</span>
-                  <span>Fake invites or boost-and-leave will result in immediate plan termination.</span>
-                </li>
-              </ul>
-            </div>
-            <div className="glass-card p-12 rounded-[3rem] border-brand-orange/5">
-              <h3 className="text-xl font-display font-bold text-white mb-8 uppercase tracking-widest">Payments</h3>
-              <ul className="space-y-6 text-neutral-400 font-medium">
-                <li className="flex gap-4">
-                  <span className="text-brand-orange">»</span>
-                  <span>IPv4 addresses are premium add-ons unless explicitly included in the plan.</span>
-                </li>
-                <li className="flex gap-4">
-                  <span className="text-brand-orange">»</span>
-                  <span>Strict no-refund policy applies once the VPS has been deployed.</span>
-                </li>
-              </ul>
-            </div>
-            <div className="glass-card p-12 rounded-[3rem] border-brand-orange/5">
-              <h3 className="text-xl font-display font-bold text-white mb-8 uppercase tracking-widest">Support</h3>
-              <ul className="space-y-6 text-neutral-400 font-medium">
-                <li className="flex gap-4">
-                  <span className="text-brand-orange">»</span>
-                  <span>24/7 technical assistance available via our Discord community.</span>
-                </li>
-                <li className="flex gap-4">
-                  <span className="text-brand-orange">»</span>
-                  <span>Backups are the user's responsibility; we provide high-availability storage.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ================= FOOTER ================= */}
-      <footer className="py-24 border-t border-white/5 text-center bg-brand-dark/40">
+      <footer className="py-32 border-t border-white/5 text-center bg-brand-blue-darkest relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full h-[300px] bg-brand-orange/[0.03] blur-[120px] -z-10" />
         <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-10">
-            <span className="font-display font-bold text-3xl tracking-tighter uppercase text-white">
-              HOST<span className="text-brand-orange">FORGE</span>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="mb-16"
+          >
+            <span className="font-black text-5xl tracking-tighter uppercase text-white italic">
+              HOST<span className="text-brand-orange not-italic">FORGE</span>
             </span>
+          </motion.div>
+          <div className="flex flex-wrap justify-center gap-x-16 gap-y-8 mb-20">
+            {['Support Portal', 'Tier Pricing', 'Legal Terms'].map((link) => (
+              <a 
+                key={link} 
+                href="#" 
+                className="text-slate-500 font-black hover:text-white transition-all text-xs uppercase tracking-[0.4em]"
+              >
+                {link}
+              </a>
+            ))}
           </div>
-          <div className="flex justify-center gap-10 mb-12">
-            <a href={DISCORD_INVITE_LINK} target="_blank" className="text-neutral-500 font-bold hover:text-brand-orange transition-colors text-xs uppercase tracking-widest">Support</a>
-            <a href="#plans" onClick={(e) => scrollToSection(e, 'plans')} className="text-neutral-500 font-bold hover:text-brand-orange transition-colors text-xs uppercase tracking-widest">Pricing</a>
-            <a href="#terms" onClick={(e) => scrollToSection(e, 'terms')} className="text-neutral-500 font-bold hover:text-brand-orange transition-colors text-xs uppercase tracking-widest">Terms</a>
-          </div>
-          <p className="text-neutral-700 text-[10px] font-black uppercase tracking-[0.3em]">
-            © {new Date().getFullYear()} HostForge Global • Enterprise Hosting Solutions
+          <div className="max-w-2xl mx-auto h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent mb-12" />
+          <p className="text-slate-700 text-[11px] font-black uppercase tracking-[0.6em]">
+            © {new Date().getFullYear()} HostForge Global • High-Performance Cloud
           </p>
         </div>
       </footer>
